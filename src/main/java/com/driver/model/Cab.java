@@ -3,52 +3,40 @@ package com.driver.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "cab")
 public class Cab {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int cabId;
+    private Integer Id;
+    private Integer perKmRate;
+    private Boolean available;
 
-    private int perKmRate;
-
-    private boolean availabe;
-
-    @JoinColumn
     @OneToOne
-    public Driver driver;
+    @JoinColumn
+    Driver driver;
 
-    public Cab() {
+    public Integer getId() {
+        return Id;
     }
 
-    public Cab(int perKmRate, boolean availabe, Driver driver) {
-        this.perKmRate = perKmRate;
-        this.availabe = availabe;
-        this.driver = driver;
+    public void setId(Integer id) {
+        Id = id;
     }
 
-    public int getCabId() {
-        return cabId;
-    }
-
-    public void setCabId(int cabId) {
-        this.cabId = cabId;
-    }
-
-    public int getPerKmRate() {
+    public Integer getPerKmRate() {
         return perKmRate;
     }
 
-    public void setPerKmRate(int perKmRate) {
+    public void setPerKmRate(Integer perKmRate) {
         this.perKmRate = perKmRate;
     }
 
-    public boolean isAvailabe() {
-        return availabe;
+    public Boolean getAvailable() {
+        return available;
     }
 
-    public void setAvailabe(boolean availabe) {
-        this.availabe = availabe;
+    public void setAvailable(Boolean available) {
+        this.available = available;
     }
 
     public Driver getDriver() {

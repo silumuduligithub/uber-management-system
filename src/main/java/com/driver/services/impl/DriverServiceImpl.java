@@ -1,51 +1,34 @@
-package com.driver.services.impl;
+package com.driver.controllers;
 
-import com.driver.model.Cab;
-import com.driver.repository.CabRepository;
-import com.driver.services.DriverService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import com.driver.model.Driver;
-import com.driver.repository.DriverRepository;
+import com.driver.services.DriverService;
 
-@Service
-public class DriverServiceImpl implements DriverService {
+
+@RestController
+@RequestMapping(value = "/driver")
+public class DriverController {
 
 	@Autowired
-	DriverRepository driverRepository3;
+	DriverService driverService;
 
-	@Autowired
-	CabRepository cabRepository3;
-
-	@Override
-	public void register(String mobile, String password){
-		//Save a driver in the database having given details and a cab with ratePerKm as 10 and availability as True by default.
-		Driver driver = new Driver();
-		driver.setMobileNo(mobile);
-		driver.setPassword(password);
-
-		Cab cab = new Cab();
-		cab.setAvailabe(true);
-		cab.setPerKmRate(10);
-
-		driver.setCab(cab);
-
-		driverRepository3.save(driver);
+	@PostMapping(value = "/register")
+	public ResponseEntity<Void> registerDriver(@RequestParam String mobile, @RequestParam String password){
+		driverService.register(mobile, password);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	@Override
-	public void removeDriver(int driverId){
-		// Delete driver without using deleteById function
-		Driver driver = driverRepository3.findById(driverId).get();
-		driverRepository3.delete(driver);
+	@DeleteMapping(value = "/delete")
+	public void deleteDriver(@PathVariable Integer driverId){
+		driverService.removeDriver(driverId);
 	}
 
-	@Override
-	public void updateStatus(int driverId){
-		//Set the status of respective car to unavailable
-		Driver driver = driverRepository3.findById(driverId).get();
-		driver.getCab().setAvailabe(false);
-		driverRepository3.save(driver);
+	@PutMapping("/status")
+	public void updateStatus(@RequestParam Integer driverId){
+		driverService.updateStatus(driverId);
 	}
 }
