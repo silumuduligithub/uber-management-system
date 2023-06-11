@@ -4,15 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import com.driver.model.Driver;
 import com.driver.services.DriverService;
 
 
 @RestController
 @RequestMapping(value = "/driver")
 public class DriverController {
-
 	@Autowired
 	DriverService driverService;
 
